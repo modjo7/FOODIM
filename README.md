@@ -40,4 +40,9 @@ Run Server (externel)
 python manage.py runserver 0.0.0.0:8000
 ```
 
-(Github token : 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)
+
+This project is closed after development:
+```
+Github token : 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
+Archieve backup : https://drive.google.com/drive/folders/1oowvZU5oANydums6pr93IULgFFDMUH8f?usp=sharing
+```
