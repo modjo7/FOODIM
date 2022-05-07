@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+
+{% block title %} About {% endblock title %}
+
+
+{% block content %}
+    
+    {% if not user.is_authenticated  %}
+        <br>
+        <a href="{% url 'home' %}" class="btn ghost-button">Go Back</a>
+    {% endif %}    
+
+    <div class="align-left" style="color: #3d85c6; font-style: bold; font-size: 3rem;">FOODIM</div>
+    <div class="align-left" style="color: #2d85c6"; font-size: 2>Food ingredients management for people living alone</div>
+    <br><br>
+
+    <div class="align-left">
+        <h3 style="color:#3d85c6">About</h3> <br>
+            <p>
+                FOODIM is a food ingredients management application for people who live alone. Using the application allows people living alone to more easily and efficiently manages their food ingredients. The aim is to help the consumer to reduce impulsive buying, as well as to reduce food waste.
+                <br>
+            </p>
+        <br>
+    </div>
+        <h3 style="color:#3d85c6" class="align-left">Features</h3> <br>
+            1) Food ingredient inventory management with its shelf life and photo<br>
+            2) Community section to exchange food ingredients each other with sharing the inventory<br>
+            3) Tracking user health based on the food ingredients records<br>
+            </ul>
+        <br><br>
+
+        <h3 style="color:#3d85c6" class="left-middle">Feature 1</h3> <br>
+            Food ingredient inventory management with its shelf life and photo<br><br><br>
+        <br>
+
+        <h3 style="color:#3d85c6" class="left-middle">Feature 2</h3> <br>
+            Community section to exchange food ingredients each other with sharing the inventory<br><br><br>
+        <br>
+
+        <h3 style="color:#3d85c6" class="left-middle">Feature 3</h3> <br>
+            Tracking user health based on the food ingredients records<br><br><br>
+        <br>
+
+
+{% endblock content %}

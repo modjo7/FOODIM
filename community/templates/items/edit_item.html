@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+
+{% block title %} {{title}} {% endblock title %}
+
+
+{% block content %}
+
+    <div style="color:#3d85c6; font-style: bold; font-size: 2rem; border-bottom: 1px solid white;">{{title}}</div> <br>
+    
+    <form method="post">
+    
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        
+        {{ form.itemname.errors }}
+        {{ form.protein.errors }}
+        {{ form.fat.errors }}
+        {{ form.carbohydrate.errors }}
+        {{ form.vitamin.errors }}
+        {{ form.desc.errors }}
+
+        <div class="form-group">
+            <label style="font-size: 22px" for="{{ form.name.id_for_label }}">Name</label>
+            {{ form.name }}
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label style="font-size: 22px" for="{{ form.protein.id_for_label }}">Protein</label>
+                {{ form.protein }}
+            </div>
+            <div class="form-group col-md-3">
+                <label style="font-size: 22px" for="{{ form.fat.id_for_label }}">Fat</label>
+                {{ form.fat }}
+            </div>
+           <div class="form-group col-md-3">
+                <label style="font-size: 22px" for="{{ form.carbohydrate.id_for_label }}">Carbohydrate</label>
+                {{ form.carbohydrate }}
+            </div>
+            <div class="form-group col-md-3">
+                <label style="font-size: 22px" for="{{ form.vitamin.id_for_label }}">Vitamin</label>
+                {{ form.vitamin }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label style="font-size: 22px" for="{{ form.desc.id_for_label }}">Description</label>
+            {{ form.desc }}
+        </div>
+
+        <br>
+
+        <div class="align-middle">
+            <button type="submit" class="btn ghost-pink">{{ savebtn }}</button>
+            {% if title == "New Item" %}
+                <button type="reset" class="btn ghost-blue" >Reset</button>
+            {% endif %}
+            {% if delbtn %}
+                <a href="{% url 'delete-item' item.pk %}" class="btn ghost-red"> Delete Item </a>
+            {% endif %}
+            <a href="{% url 'items-list' %}" class="btn ghost-blue">Cancel</a>
+        </div>
+        
+    </form>
+
+{% endblock content %}

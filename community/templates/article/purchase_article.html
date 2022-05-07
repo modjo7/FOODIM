@@ -1,0 +1,141 @@
+{% extends article_base %}
+{% load static %}
+
+
+{% block title %} Purchases Article No : {{ article.articleno }}{% endblock title %}
+
+
+{% block content %}
+
+    <div style="color:#3d85c6; font-style: bold; font-size: 2rem;  border-bottom: 1px solid white;">Purchase Article No : {{ article.articleno }}</div>
+
+    <form method="post">
+    {% csrf_token %}
+
+        <div class="bg">
+
+            <br>
+
+            <div id="printArea" class="bg">
+
+                <table class="outer-box inner-box" style="width: 600px; margin-left: 0;">
+                    <tbody>
+
+                        <tr>
+                            <td>
+                            <table class="outer-box" style="width: 600px; margin-left: 0;">
+                                <tbody>
+                                    <tr>
+                                        <td class=" " style="width: 50%; left; font-weight: bold;">DATE : {{ article.time.date }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="font-weight: bold;">Title:</td>
+                                        <td class="inner-box align-middle">&nbsp; <input type="text" name="title" class="align-middle" style="border: 0;" value="{{ articledetails.title }}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="font-weight: bold;">Comment:</td>
+                                        <td class="inner-box align-middle">&nbsp; <input type="comment" name="title" class="align-middle" style="border: 0;" value="{{ articledetails.comment }}"></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="" style="text-align: left; font-weight: bold;" colspan="3"><br>I want to buy {{ article.item.name }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="inner-box" style="width: 50%; font-weight: ;">&nbsp;Item Name</td>
+                                        <td class="inner-box" style="width: 50%; font-weight: ;">&nbsp;Picture</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="width: 50%; font-weight: ; text-align: center"><br>{{ article.item.name }}<br><br></td>
+                                        <td class="inner-box" style="width: 50%; font-weight: ;"><br><br><br><br></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            </td>
+                        </tr>
+
+                        <td class="" style="text-align: left; font-weight: bold;"><br>Among these stocks:</td>
+
+                        <tr>
+                            <td>
+                            <table class="outer-box" style="width: auto; margin-left: auto; margin-right: auto;">
+                                <tbody>
+                                    <tr>
+                                        <td class="inner-box" style="width: 10%; font-weight: bold; text-align: center;">Stock</td>
+                                        <td class="inner-box" style="width: 10%; font-weight: bold; text-align: center;">User</td>
+                                        <td class="inner-box" style="width: 20%; font-weight: bold; text-align: center;">Stock name</td>
+                                        <td class="inner-box" style="width: 20%; font-weight: bold; text-align: center;">Suggested price ($)</td>
+                                        <td class="inner-box" style="width: 20%; font-weight: bold; text-align: center;">Quantity</td>
+                                        <td class="inner-box" style="width: 30%; font-weight: bold; text-align: center;">Total price ($)</td>
+                                    </tr>
+
+                                    {% for item in items %}
+                                        <tr style="height: auto;">
+                                            <td class="inner-box" style="width: 10%; text-align: center">  {{ forloop.counter }}</td>
+                                            <td class="inner-box" style="width: 10%; text-align: center">&nbsp; {{ item.stock.username }}</td>
+                                            <td class="inner-box" style="width: 20%; text-align: center">&nbsp; {{ item.stock.name }}</td>
+                                            <td class="inner-box" style="width: 20%; text-align: center">&nbsp; {{ item.perprice }}</td>
+                                            <td class="inner-box" style="width: 20%; text-align: center">&nbsp; {{ item.quantity }}</td>
+                                            <td class="inner-box" style="width: 30%; text-align: center">&nbsp;{{ item.totalprice }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            </td>
+                        </tr>
+
+                        <td class="" style="text-align: left; font-weight: bold;"><br><br> Contact me :</td>
+
+                        <tr>
+                            <td>
+                            <table class="outer-box inner-box" style="width: 600px; margin-left: auto; margin-right: auto;">
+                                <tbody>
+                                    <tr>
+                                        <td class="inner-box" style="font-weight: bold;">&nbsp;Contact</td>
+                                        <td class="inner-box align-middle">&nbsp; <input type="text" name="contact" class="align-middle" style="border: 0; overflow: hidden;" value="{% if articledetails.contact %}{{ articledetails.contact }}{% endif %}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="inner-box" style="font-weight: bold;">&nbsp;Address </td>
+                                        <td class="inner-box align-middle">&nbsp; <input type="text" name="address" class="align-middle" style="border: 0; overflow: hidden;" value="{% if articledetails.address %}{{ articledetails.address }}{% endif %}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: left;">
+                                <span style="font-weight: bold;"><br><br></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <br><br>
+
+        </div>
+
+        <br><br>
+
+        <div class="wrapper">
+            <button class="center ghost-red" type="submit">Save Draft</button>
+            <button class="center ghost-blue" onclick="printpage('printArea')">Print</button>
+            <a href="{% url 'purchases-list' %}" class=" btn center ghost-blue">Go Back</a>
+        </div>
+
+    </form>
+
+    <script>
+        function printpage(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }       
+        </script>
+
+{% endblock %}

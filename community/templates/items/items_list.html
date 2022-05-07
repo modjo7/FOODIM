@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+
+{% block title %} Item List {% endblock title %}
+
+
+{% block content %}
+    
+    <div class="row" style="color: #3d85c6; font-style: bold; font-size: 2rem;">
+        <div class="col-md-8">Item List</div>
+        <div class="col-md-4">               
+            <div style="float:right;"> <a class="btn ghost-blue" href="{% url 'new-item' %}">Add New Item</a> </div>
+        </div>
+    </div>
+
+    <br>
+
+    <table class="table table-css">
+        
+        <thead class="thead-inverse align-middle">
+            <tr>
+                <th width="10%">ItemName</th>
+                <th width="10%">Picture</th>
+                <th width="10%">Protein</th>
+                <th width="8%">Fat</th>
+                <th width="12%">Carbohydrate</th>
+                <th width="10%">Vitamin</th>
+                <th width="30%">Description</th>
+                <th width="10%">Edit</th>
+            </tr>
+        </thead>
+
+{% if object_list %}
+
+        <tbody>
+            {% for item in object_list %}
+
+                <thead class="align-middle" style="font-size: 1rem; font-family: 'Times New Roman'">
+
+                    <th width="10%">{{ item.name }}</th>
+                    <th width="10%">#DEV</th>
+                    <th width="10%">{{ item.protein }}</th>
+                    <th width="8%">{{ item.fat }}</th>
+                    <th width="12%">{{ item.carbohydrate }}</th>
+                    <th width="10%">{{ item.vitamin }}</th>
+                    <th width="30%">{{ item.desc }}</th>
+                    <th width="10%">
+                        <a href="{% url 'edit-item' item.pk %}" class="btn ghost-blue">Edit</a>
+                        <a href="{% url 'delete-item' item.pk %}" class="btn ghost-red">Delete</a>
+                    </th>
+                </thead>
+
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+    <div class="align-middle">
+        {% if is_paginated %}
+
+            {% if page_obj.has_previous %}
+                <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
+
+        {% endif %}
+    </div>
+
+{% else %}
+
+        <tbody></tbody>   
+    </table>
+
+    <br><br><br><br><br><br><br><br>
+    <div style="color: #3d85c6; font-style: bold; font-size: 1.5rem; text-align: center;">List is empty.</div>
+
+{% endif %}
+
+
+{% endblock content %}

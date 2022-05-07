@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+
+{% block title %} Sales List {% endblock title %}
+
+
+{% block content %}
+    
+    <div class="row" style="color: #3d85c6; font-style: bold; font-size: 2rem;">
+        <div class="col-md-8">Sales List</div>
+        <div class="col-md-4">               
+            <div style="float:right;"> <a class="btn ghost-blue" href="{% url 'new-sale' %}">New Sale</a> </div>
+        </div>
+    </div>
+    
+    <br>
+
+    <table class="table table-css"> 
+            
+        <thead class="thead-inverse align-middle">
+            <tr>
+                <th width="5%">No</th>
+                <th width="10%">Item</th>
+                <th width="10%">Shell life</th>
+                <th width="5%">Quantity</th>
+                <th width="10%">Price</th>
+                <th width="20%">Picture</th>
+                <th width="20%">Date</th>
+                <th width="20%">View</th>
+            </tr>
+        </thead>
+
+{% if articles %}
+
+        <tbody>
+            {% for sale in articles %}
+
+            <thead class="thead-inverse align-middle">
+                <tr>
+                    <th width="5%">{{ sale.articleno }}</th>
+                    <th width="10%">
+                        {{ sale.title }}
+                    </th>
+                    <th width="10%"> <! #DEF Is has to be modified since the shell life should be displayed>
+                        {% for item in sale.get_items_list %}
+                            {{ item.stock.name }} <br>
+                        {% endfor %}
+                    </th>
+                    <th width="5%">
+                        {% for item in sale.get_items_list %}
+                            {{ item.quantity }} <br>
+                        {% endfor %}
+                    </th>
+
+                    <th width="10%">{{ sale.get_total_price }}</th>
+                    <th width="20%">#Picture</th>
+                    <th width="20%">{{ sale.time.date }}</th>
+                    <th width="20%">
+                        <a href="{% url 'sale-article' sale.articleno %}" class="btn ghost-pink">View</a> <a href="{% url 'delete-sale' sale.pk %}" class="btn ghost-red">Delete</a>
+                    </th>
+                </tr>
+            </thead>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+    <div class="align-middle">
+        {% if is_paginated %}
+
+            {% if page_obj.has_previous %}
+                <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
+
+        {% endif %}
+    </div>
+
+{% else %}
+
+        <tbody></tbody>   
+    </table>
+
+    <br><br><br><br><br><br><br><br>
+    <div style="color: #3d85c6; font-style: bold; font-size: 1.5rem; text-align: center;">List is empty.</div>
+
+{% endif %}
+
+{% endblock content %}

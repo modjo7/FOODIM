@@ -1,0 +1,124 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/bootstrap.min.css' %}">
+
+    <!-- Main CSS, then Sidebar CSS, Article CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/article.css' %}">
+
+    <title>FOODIM - {% block title %}Title Missing{% endblock title %}</title>
+
+</head>
+
+<body class="bg">
+
+    <main id="wrapper">
+
+        <nav id="sidebar" class="bg-info">
+
+            <div class="sidebar-header">
+                <a class="navbar-brand titlefont mr-4" href="{% url 'home' %}"><h3>FOODIM</h3></a>
+
+                <a class="navbar-brand titlefont mr-4"><h6>V0.0</h6></a>
+            </div>
+
+            <ul class="list-unstyled sidebar-components">
+                {# <p class="sidebar-paragraph">Dummy Heading</p> #}
+                <li>
+                    <a class="sidebar-text sidebar-button" href="{% url 'home' %}" style="color:white">Home</a>
+                </li>
+                <li>
+                    <a href="#inventorySubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button" style="color:white">Manage Inventory</a>
+                    <ul class="collapse list-unstyled" id="inventorySubmenu">
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'inventory' %}" style="color:#edf3ff">Inventory List</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'new-stock' %}" style="color:#edf3ff">Add New Stock</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'items-list' %}" style="color:#edf3ff">Item List</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'new-item' %}" style="color:#edf3ff">Add New Item</a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#nutritionSubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button" style="color:white">Show Nutrition</a>
+                    <ul class="collapse list-unstyled" id="nutritionSubmenu">
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'nutrition' %}" style="color:#edf3ff">Show Nutrition</a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#purchaseSubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button" style="color:white">Community</a>
+                    <ul class="collapse list-unstyled" id="purchaseSubmenu">
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'purchases-list' %}" style="color:#edf3ff">Purchases List</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'select-item' %}" style="color:#edf3ff">New Purchase item</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'sales-list' %}" style="color:#edf3ff">Sales List</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'new-sale' %}" style="color:#edf3ff">New Sale item</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'board' %}" style="color:#edf3ff">Free Board</a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="sidebar-text sidebar-button" href="{% url 'help' %}" style="color:white">Help</a>
+                </li>
+
+                <li class="bottomleft">
+                    <a href="#UserSubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button">{{ request.user.username }}</a>
+                    <ul class="collapse list-unstyled" id="UserSubmenu">
+                        {% if request.user.is_superuser %}
+                            <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'admin:index' %}">Admin Page</a> </li>
+                        {% endif %}
+                            <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'logout' %}">Logout</a> </li>
+                    </ul>
+                </li>
+
+            </ul>
+            {% comment %}
+            <ul class="list-unstyled CTAs">
+                <li>
+                    <a href="#" class="sidebar-button nav-button">Button</a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-text">Link</a>
+                </li>
+            </ul>
+            {% endcomment %}
+
+        </nav>
+
+        <div id="content" class="bg-white">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}"> {{ message }} </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <div class="container">
+                        {% block content %}{% endblock content %}
+                    </div>
+
+                </div>
+            </div>
+            <br>
+
+        </div>
+
+    </main>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'bootstrap/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'bootstrap/popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap/bootstrap.min.js' %}"></script>
+
+</body>
+
+</html>
