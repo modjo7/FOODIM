@@ -31,26 +31,25 @@
         </form>
 
         <br>
-        
-        <thead class="thead-inverse align-middle">
-            <tr>
-                <th width="10%">Stock Name</th>
-                <th width="10%">Item Name</th>
-                <th width="10%">Expiration date</th>
-                <th width="10%">Shelf life</th>
-                <th width="10%">Quantity</th>
-                <th width="10%">Eaten</th>
-                <th width="20%">Photo</th>
-                <th width="10%">Edit</th>
-            </tr>
-        </thead>
+        <table class="table table-css">
+            <thead class="thead-inverse align-middle">
+                <tr>
+                    <th width="10%">Stock Name</th>
+                    <th width="10%">Item Name</th>
+                    <th width="10%">Expiration date</th>
+                    <th width="10%">Shelf life</th>
+                    <th width="10%">Quantity</th>
+                    <th width="10%">Eaten</th>
+                    <th width="20%">Photo</th>
+                    <th width="10%">Edit</th>
+                </tr>
+            </thead>
                   
 {% if object_list %}
 
         <tbody>         
             {% for stock in object_list %}
 
-                {% if stock.username == request.user.username %} <!for hiding other member inventories>
 
                     <thead class="align-middle" style="font-size: 1rem; font-family: 'Times New Roman'">
                             <th width="10%">{{ stock.name }}</th>
@@ -59,14 +58,17 @@
                             <th width="10%">{{ stock.timeleft }}</th>
                             <th width="10%">{{ stock.quantity }}</th>
                             <th width="10%">{{ stock.quantity_eat }}</th>
-                            <th width="20%">#DEV</th>
+                            <th width="20%">
+                                {% if stock.photo %}
+                                <img src ="{{ stock.photo.url }}" width=100>
+                                {% endif %}
+                            </th>
                             <th width="10%">
                                 <a href="{% url 'edit-stock' stock.pk %}" class="btn ghost-blue">Edit</a>
                                 <a href="{% url 'delete-stock' stock.pk %}" class="btn ghost-pink">Delete</a>
                             </th>
                     </thead>
 
-                {% endif %}
 
             {% endfor %}                   
         </tbody>

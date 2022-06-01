@@ -64,7 +64,7 @@ class ItemForm(forms.ModelForm):
 
     class Meta:
         model = Item
-        fields = ['name', 'protein', 'fat', 'carbohydrate', 'vitamin', 'desc']
+        fields = ['name', 'protein', 'fat', 'carbohydrate', 'vitamin', 'desc' , 'picture']
 
 # form used to get customer details
 class SaleForm(forms.ModelForm):

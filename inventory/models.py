@@ -13,7 +13,7 @@ class Stock(models.Model):
     expdate = models.DateField(auto_now=False, auto_now_add=False, default="2022-05-30") # False options for futher modification (there is a null issue)
     timeleft = models.IntegerField(default=0) # no user input
     desc = models.CharField(max_length=300, default=0)
-    # picture_stock = models.ImageField(upload_to='uploads/stock', default=0)
+    photo = models.ImageField(null=True, blank=True, upload_to="images/")
 
     # DEV test (to solve DeferredAttribute)
     # expdate2 = models.CharField(max_length=16, default="221231")  # False options for futher modification (there is a null issue)
