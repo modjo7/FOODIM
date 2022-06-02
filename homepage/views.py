@@ -3,6 +3,10 @@ from django.views.generic import View, TemplateView
 from inventory.models import Stock
 from community.models import SaleArticle, PurchaseArticle
 
+from django.urls import reverse_lazy
+from django.views import generic
+
+from .forms import CustomUserCreationForm
 
 class HomeView(View):
     template_name = "home.html"
@@ -25,3 +29,12 @@ class HomeView(View):
 
 class HelpView(TemplateView):
     template_name = "help.html"
+
+class SignUpView(TemplateView):
+    template_name = "signup.html"
+    #template_name = "home2.html"
+
+class SignUp(generic.CreateView):
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'signup.html'

@@ -150,5 +150,7 @@ LOGIN_REQUIRED_IGNORE_VIEW_NAMES = [                    # urls ignored by the lo
     'login',
     'logout',
     'help',
+    'signup',
 ]
 
+AUTH_USER_MODEL = 'homepage.CustomUser'
