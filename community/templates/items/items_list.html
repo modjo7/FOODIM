@@ -40,7 +40,11 @@
                 <thead class="align-middle" style="font-size: 1rem; font-family: 'Times New Roman'">
 
                     <th width="10%">{{ item.name }}</th>
-                    <th width="10%">#DEV</th>
+                    <th width="10%">
+                        {% if item.picture %}
+                        <img src ="{{ item.picture.url }}" width=100>
+                        {% endif %}
+                    </th>
                     <th width="10%">{{ item.protein }}</th>
                     <th width="8%">{{ item.fat }}</th>
                     <th width="12%">{{ item.carbohydrate }}</th>

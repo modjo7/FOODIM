@@ -10,31 +10,44 @@ from .models import Stock
 from .forms import StockForm
 from django_filters.views import FilterView
 from .filters import StockFilter
-
 import datetime
+
 
 class StockListView(FilterView):
     filterset_class = StockFilter
-    queryset = Stock.objects.filter(is_deleted=False)
     template_name = 'inventory.html'
     paginate_by = 10
+    
+    
+    # def get(self, request):
+    #     dt_now = datetime.date.today()
+    #     queryset = Stock.objects.values().filter(is_deleted=False)
+    #     print(queryset)
+    #     for i in range(0,len(queryset)):
+    #         v = str(queryset[i]['expdate']-dt_now).split()
+    #         #print(v)
+    #         if len(v) == 1:
+    #             queryset[i]['timeleft'] = 0
+    #         else:
+    #             queryset[i]['timeleft'] = v[0]
+    #     Stock.objects.update()
+    #     return render(request, self.template_name)
 
-    # DEV : to be modified
-    # temp will be expdate. ( I failed to bring expdate data here due to DeferredAttribute error )
+    def get_context_data(self, **kwargs):
+        dt_now = datetime.date.today()
+        context = super().get_context_data(**kwargs)
+        queryset = Stock.objects.values().filter(is_deleted=False)
+        print(queryset)
+        for i in range(0,len(queryset)):
+            v = str(queryset[i]['expdate']-dt_now).split()
+            if len(v) == 1:
+                queryset[i]['timeleft'] = int(0)
+            else:
+                queryset[i]['timeleft'] = int(v[0])
+        print(queryset)
+        Stock.objects.update()
+        return context
 
-    # Current date
-    dt_now = datetime.datetime.now()  # almost same : dt_today = datetime.date.today()
-
-    # test : failed (DeferredAttribute error, I don't know why). expdate is also the same.
-    #temp1 = Stock.expdate2
-    #timeleft_temp1 = datetime.datetime.strptime(temp1, '%Y-%m-%d') - dt_now
-
-    # Fixed date string (temp) : success
-    temp = "2022-12-30"
-    timeleft_temp = datetime.datetime.strptime(temp, '%Y-%m-%d') - dt_now
-    Stock.timeleft = timeleft_temp.days
-
-    # END
 
 class StockCreateView(SuccessMessageMixin, CreateView):                                 # createview class to add new stock, mixin used to display message
     model = Stock                                                                       # setting 'Stock' model as model
@@ -47,7 +60,7 @@ class StockCreateView(SuccessMessageMixin, CreateView):                         
         context = super().get_context_data(**kwargs)
         context["title"] = 'New Stock'
         context["savebtn"] = 'Add to Inventory'
-        return context       
+        return context      
 
 
 class StockUpdateView(SuccessMessageMixin, UpdateView):                                 # updateview class to edit stock, mixin used to display message

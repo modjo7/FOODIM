@@ -36,6 +36,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'inventory')
 MEDIA_URL = '/inventory/'
 # END
 
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
 # Application definition
 
 INSTALLED_APPS = [

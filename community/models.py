@@ -13,9 +13,8 @@ class Item(models.Model):
     fat = models.IntegerField(default=0)
     carbohydrate = models.IntegerField(default=0)
     vitamin = models.IntegerField(default=0)
-    # picture = models.FileField(upload_to='uploads/')
     desc = models.CharField(max_length=200)
-
+    picture = models.ImageField(null=True, blank=True, upload_to="images/")    
     # End
     
     is_deleted = models.BooleanField(default=False)
