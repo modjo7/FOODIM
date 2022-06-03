@@ -1,5 +1,7 @@
 {% load static %}
 
+{% load changeStatement from custom_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,6 +46,75 @@
 
                 <a class="navbar-brand titlefont mr-4"><h6>V0.0</h6></a>
             </div>
+
+            <div class="sidebar-header" class="bg-light">
+
+                <a class="navbar-brand titlefont mr-4"><h6>Notice</h6></a>
+
+                {% with statement=1 %}
+                   {% for item in timeleft_user %}
+                       {% if item == request.user.username and statement %}
+
+                           {% changeStatement statement as statement %} <!-- when u don't want to enter in if again. -->
+
+                           <!-- Line -->
+                           <br><div style="color:#3d85c6; font-style: bold; font-size: 2rem; border-bottom: 1px solid white;"></div>
+                           <small><span style="color: aquamarine">Expiration date is approaching!: </span></small>
+                            <!-- Line End -->
+
+                            {% for mystock in timeleft %}
+                                <div class="row">
+                                    <div class="col-md-9">
+                                        <small> {{mystock}} days left </small><br>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <small><span style="color: palegoldenrod">Write article <a href="{% url 'new-sale' %}">Here!</a></span></small>
+                       {% endif %}
+                   {% endfor %}
+                {% endwith %}
+
+
+                <p>
+
+                {% for item in purchases %}
+
+                    {% if not forloop.first %}
+                        <br><div style="border-bottom: 0.5px solid #fff"></div><br>
+                    {% endif %}
+                    <div class="row">               
+                        <div class="col-md-9"> 
+                             <small> Article is uploaded <a href="{% url 'purchase-article' item.articleno %}">View</a>
+                            (Buy {{ item.item.name }}! ) </small>
+                            <br>
+                            
+                        </div>
+                         
+                    </div>
+                {% endfor %}
+
+                {% for item in sales %}
+                    {% if not forloop.first %}
+                        <br><div style="border-bottom: 0.5px solid #fff"></div><br>
+                    {% endif %}
+                    <div class="row">
+                        <div class="col-md-9">
+                             <small> Article is uploaded <a href="{% url 'sale-article' item.articleno %}">View</a>
+                            (Sell {{ item.title }} !) </small>
+
+                            <br>
+                            {{ item.stock.name }}
+                            {% if item.stock.timeleft == 0 %}
+                                TEST
+                            {% endif %}
+                        </div>
+
+                    </div>
+                {% endfor %}
+                
+
+            </div>
+
 
             <ul class="list-unstyled sidebar-components">
                 {# <p class="sidebar-paragraph">Dummy Heading</p> #}

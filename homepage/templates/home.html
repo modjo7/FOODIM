@@ -34,17 +34,17 @@
 
             <div class="col-md-6">
                 <div style="color:#3d85c6; font-style: oblique; font-size: 1.3em; border-bottom: 2px solid #fff">Most Recent Sales</div><br>
-                {% for item in sales %}
+                {% for article in sales %}
                     {% if not forloop.first %}
                         <br><div style="border-bottom: 0.5px solid #fff"></div><br>
                     {% endif %}
                     <div class="row">               
                         <div class="col-md-9"> 
-                            Article No: {{ item.articleno }} <br> 
-                            Purchased by {{ item.name }} <br>
-                            <small>{{ item.time.date }}</small>
+                            Sales Article No: {{ article.articleno }} <br>
+                            Sell : {{ article.title }} !<br>
+                            <small>{{ article.time.date }}</small>
                         </div>
-                        <div class="col-md-3"> {{ item.get_total_price }} <br> <br> <a href="{% url 'sale-article' item.articleno %}">View Article</a> </div>
+                        <div class="col-md-3"> {{ article.get_total_price }} Won <br> <br> <a href="{% url 'sale-article' article.articleno %}">View Article</a> </div>
                     </div>
                 {% endfor %}
             </div>
@@ -57,11 +57,11 @@
                     {% endif %}
                     <div class="row">               
                         <div class="col-md-9"> 
-                            Article No: {{ item.articleno }} <br> 
-                            Purchased by {{ item.item.name }} <br>
+                            Purchases Article No: {{ item.articleno }} <br>
+                            Buy : {{ item.item.name }} !<br>
                             <small>{{ item.time.date }}</small>
                         </div>
-                        <div class="col-md-3"> {{ item.get_total_price }} <br> <br> <a href="{% url 'purchase-article' item.articleno %}">View Article</a> </div>
+                        <div class="col-md-3"> {{ item.get_total_price }} Won <br> <br> <a href="{% url 'purchase-article' item.articleno %}">View Article</a> </div>
                     </div>
                 {% endfor %}
             </div>
