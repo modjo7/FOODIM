@@ -27,7 +27,6 @@ python manage.py migrate
 Create a admin user
 ```
 python manage.py createsuperuser
-
 ```
 
 Run Server

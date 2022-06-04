@@ -79,7 +79,9 @@
                                 <tbody>
                                     <tr>
                                         <td class="inner-box" style="font-weight: bold;">&nbsp;Contact</td>
-                                        <td class="inner-box align-middle">&nbsp; <input type="text" name="contact" class="align-middle" style="border: 0; overflow: hidden;" value="{% if article.contact %}{{ article.contact }}{% endif %}"></td>
+                                        <td class="inner-box align-middle">&nbsp; 
+                                            <input type="text" name="contact" class="align-middle" style="border: 0; overflow: hidden;" value="{% if article.contact %}{{ article.contact }}{% endif %}">
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="inner-box" style="font-weight: bold;">&nbsp;Address </td>
@@ -109,7 +111,7 @@
         <div class="wrapper">
             <button class="center ghost-blue" onclick="printpage('printArea')">Print</button>
             <button class="center ghost-green" type="submit">Save Draft</button>
-            <a href="{% url 'sales-list' %}" class="btn center ghost-button">Go Back</a>
+            <a href="{% url 'sales-list' %}" class="btn center ghost-blue">Go Back</a>
         </div>
     
     </form>

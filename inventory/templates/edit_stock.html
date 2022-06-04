@@ -42,8 +42,10 @@
         </div>
         <div class="form-group ">
             {{ form.username.errors }}
-            <label style="font-size: 22px" for="{{ form.username.id_for_label }}">Username: (#DEV : It has to be filled with username automatically.)</label>
-            {{ form.username }}
+            <label style="font-size: 22px" for="{{ form.username.id_for_label }}"></label>
+            
+            <input type="text", id="username", name="username", value={{user.username}} readonly style="opacity: 0">
+            
         </div>
 
         <br>

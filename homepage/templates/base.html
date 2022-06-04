@@ -85,8 +85,11 @@
                         {% if request.user.is_superuser %}
                             <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'admin:index' %}" style="color:#edf3ff">Admin Page</a> </li>
                         {% endif %}
-                            <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'logout' %}" style="color:#edf3ff">Logout</a> </li>
-                    </ul>
+                            <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'logout' %}" style="color:#edf3ff">Logout</a></li>
+                            <!-- XXXX -->
+                            <li><a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'change_password' %}" style="color:#edf3ff">Change Password</a></li>
+                            <li><a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'deactivate' %}" style="color:rgba(183, 9, 9, 0.674)">Delete Membership</a></li>
+                        </ul>
                 </li>
 
             </ul>
