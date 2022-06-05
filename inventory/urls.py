@@ -10,6 +10,4 @@ urlpatterns = [
     path('new', views.StockCreateView.as_view(), name='new-stock'),
     path('stock/<pk>/edit', views.StockUpdateView.as_view(), name='edit-stock'),
     path('stock/<pk>/delete', views.StockDeleteView.as_view(), name='delete-stock'),
-
-    path('nutrition/', views.NutritionView.as_view(), name='nutrition')
 ]

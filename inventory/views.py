@@ -15,18 +15,19 @@ import datetime
 
 class StockListView(FilterView):
     filterset_class = StockFilter
-    queryset = Stock.objects.filter(is_deleted=False)
+    queryset = Stock.objects.filter(is_deleted=False).order_by('timeleft')
     template_name = 'inventory.html'
     paginate_by = 10
 
     def get_context_data(self, **kwargs):
 
         dt_now = datetime.date.today()
-        queryset = Stock.objects.filter(is_deleted=False).order_by('-quantity')
+        queryset = Stock.objects.filter(is_deleted=False).order_by('timeleft')
 
         for item in queryset:
-            v = str(item.expdate - dt_now).split()
-            item.timeleft = int(v[0])
+            x = (item.expdate - dt_now).total_seconds()
+            x = x/(60*60*24)
+            item.timeleft = int(x)
             item.save()
 
         context = super().get_context_data(**kwargs)

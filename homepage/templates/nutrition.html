@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block title %} Nutrition {% endblock title %}
+
+
+{% block content %}
+
+    <div style="color:#3d85c6; font-style: bold; font-size: 2rem; border-bottom: 1px solid #fff">Nutrition status for {{ request.user.username }} </div>
+
+    <br>
+
+    <div id="container" style="position: relative; height:45vh; border: 2mm ridge #3D85C6; border-radius: 30px;" class="align-middle table-bordered">
+        <canvas id="bar-graph"></canvas>
+    </div>
+
+    <br>
+
+    <br>
+
+    <!-- Loading Chart JS -->
+    <script src="{% static 'js/Chart.min.js' %}"></script>  
+    <script>
+        Chart.defaults.global.defaultFontColor = '#000';
+
+        //configuration for the bar graph
+        var barConfig = {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    backgroundColor: '#5ca6e9',
+                    label: 'Stock in Inventory',
+                    data: {{ data|safe }},
+                }],
+                labels: {{ labels|safe }}
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            },
+        };
+
+
+        //runs all charts on loading the webpage
+        window.onload = function() {
+            var ctx = document.getElementById('bar-graph').getContext('2d');
+            window.BarStock = new Chart(ctx, barConfig);
+        };
+
+    </script>
+
+{% endblock content %}

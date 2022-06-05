@@ -31,17 +31,20 @@ class HomeView(View):
 
         dt_now = datetime.date.today()
 
-        stockqueryset = Stock.objects.filter(is_deleted=False).order_by('-quantity')
+        stockqueryset = Stock.objects.filter(is_deleted=False).order_by('timeleft')
 
         for item in stockqueryset:
-            v = str(item.expdate - dt_now).split()
-            item.timeleft = int(v[0])
+            x = (item.expdate - dt_now).total_seconds()
+            x = x/(60*60*24)
+            item.timeleft = int(x)
+            item.save()
 
-            labels.append(item.name)
-            data.append(item.quantity)
-            if (item.timeleft <= 2 and item.timeleft >= 0): # if timeleft 0,1,2, the notice will be added.
-                timeleft.append(item.name + " : " + str(item.timeleft) + " days left")
-                timeleft_user.append(item.username)
+            if (request.user.username == item.username):
+                labels.append(item.name)
+                data.append(item.quantity)
+                if (item.timeleft <= 3 and item.timeleft >= 0):
+                    timeleft.append(item.name + " : " + str(item.timeleft) + " days left")
+                    timeleft_user.append(item.username)
 
         sales = SaleArticle.objects.order_by('-time')[:3]
         purchases = PurchaseArticle.objects.order_by('-time')[:3]
@@ -97,3 +100,12 @@ def ChangePassword(request):
     return render(request, 'change_password.html', {
         'form': form
     })
+
+class NutritionView(View):
+    template_name = "nutrition.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        return render(request, self.template_name)
