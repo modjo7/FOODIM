@@ -28,20 +28,24 @@ class HomeView(View):
         data = []
         timeleft = []
         timeleft_user = []
+        nutrition_recommended = []
+        nutrition_labels = ['Protein', 'Fat', 'Carbohydrate']
 
         dt_now = datetime.date.today()
 
         stockqueryset = Stock.objects.filter(is_deleted=False).order_by('timeleft')
 
         for item in stockqueryset:
-            x = (item.expdate - dt_now).total_seconds()
-            x = x/(60*60*24)
-            item.timeleft = int(x)
-            item.save()
-
             if (request.user.username == item.username):
+
+                x = (item.expdate - dt_now).total_seconds()
+                x = x/(60*60*24)
+                item.timeleft = int(x)
+                item.save()
+
                 labels.append(item.name)
                 data.append(item.quantity)
+
                 if (item.timeleft <= 3 and item.timeleft >= 0):
                     timeleft.append(item.name + " : " + str(item.timeleft) + " days left")
                     timeleft_user.append(item.username)
@@ -54,6 +58,8 @@ class HomeView(View):
             'data'      : data,
             'timeleft'  : timeleft,
             'timeleft_user': timeleft_user,
+            'nutrition_recommended': nutrition_recommended,
+            'nutrition_labels': nutrition_labels,
             'sales'     : sales,
             'purchases' : purchases
         }
@@ -105,7 +111,35 @@ class NutritionView(View):
     template_name = "nutrition.html"
 
     def get(self, request):
-        return render(request, self.template_name)
+        nutrition_recommended = []
+        nutrition_consumed = []
+        nutrition_labels = ['Protein', 'Fat', 'Carbohydrate']
 
-    def post(self, request):
-        return render(request, self.template_name)
+        dt_now = datetime.date.today()
+
+        y = (dt_now - request.user.signupday).total_seconds()
+        y = y / (60 * 60 * 24)
+
+        a = 100 * y
+        b = 80 * y
+        c = 60 * y
+
+        d = request.user.protein * a
+        e = request.user.fat * b
+        f = request.user.carbohydrate * c
+
+        nutrition_recommended.append(a)
+        nutrition_recommended.append(b)
+        nutrition_recommended.append(c)
+
+        nutrition_consumed.append(d)
+        nutrition_consumed.append(e)
+        nutrition_consumed.append(f)
+
+        print(nutrition_consumed)
+        context = {
+            'nutrition_recommended': nutrition_recommended,
+            'nutrition_consumed': nutrition_consumed,
+            'nutrition_labels': nutrition_labels,
+        }
+        return render(request, self.template_name, context)

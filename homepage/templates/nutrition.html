@@ -9,19 +9,23 @@
 {% block content %}
 
     <div style="color:#3d85c6; font-style: bold; font-size: 2rem; border-bottom: 1px solid #fff">Nutrition status for {{ request.user.username }} </div>
-
     <br>
+        Your comsumed nutrition based on the user data : {{ nutrition_consumed }}
+    <br><br>
+
+        <div id="container" style="position: relative; height:45vh; border: 2mm ridge #3D85C6; border-radius: 30px;" class="align-middle table-bordered">
+        <canvas id="bar-graph_consumed"></canvas>
+    </div>
+    <br>
+        Your recommended nutrition since the signup day : {{ nutrition_recommended }}
+    <br><br>
 
     <div id="container" style="position: relative; height:45vh; border: 2mm ridge #3D85C6; border-radius: 30px;" class="align-middle table-bordered">
         <canvas id="bar-graph"></canvas>
     </div>
 
-    <br>
-
-    <br>
-
     <!-- Loading Chart JS -->
-    <script src="{% static 'js/Chart.min.js' %}"></script>  
+    <script src="{% static 'js/Chart.min.js' %}"></script>
     <script>
         Chart.defaults.global.defaultFontColor = '#000';
 
@@ -31,10 +35,29 @@
             data: {
                 datasets: [{
                     backgroundColor: '#5ca6e9',
-                    label: 'Stock in Inventory',
-                    data: {{ data|safe }},
+                    label: 'Nutrition recommended',
+                    data: {{ nutrition_recommended|safe }},
                 }],
-                labels: {{ labels|safe }}
+                labels: {{ nutrition_labels|safe }}
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            },
+        };
+
+
+        //runs all charts on loading the webpage
+
+        var barConfig2 = {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    backgroundColor: 'orange',
+                    label: 'Nutrition consumed',
+                    data: {{ nutrition_consumed|safe }},
+                }],
+                labels: {{ nutrition_labels|safe }}
             },
             options: {
                 responsive: true,
@@ -45,10 +68,11 @@
 
         //runs all charts on loading the webpage
         window.onload = function() {
-            var ctx = document.getElementById('bar-graph').getContext('2d');
-            window.BarStock = new Chart(ctx, barConfig);
+            var ctx1 = document.getElementById('bar-graph').getContext('2d');
+            var ctx2 = document.getElementById('bar-graph_consumed').getContext('2d');
+            window.BarStock = new Chart(ctx1, barConfig);
+            window.BarStock = new Chart(ctx2, barConfig2);
         };
 
     </script>
-
 {% endblock content %}
