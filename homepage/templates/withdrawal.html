@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Membership withdrawal{% endblock %}
+
+{% block content %}
+<h2>Membership withdrawal</h2>
+<form method="post">
+  {% csrf_token %}
+  <!-- {{ form.as_p }} -->
+
+    Is it ok to delete your membership information?<p></p>
+  <button class="ghost-red" type="submit">OK. I confirmed.</button>
+</form>
+
+{% endblock %}
+
