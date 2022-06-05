@@ -24,45 +24,17 @@ class StockListView(FilterView):
         dt_now = datetime.date.today()
         queryset = Stock.objects.filter(is_deleted=False).order_by('-quantity')
 
-        timeleft2 = []
-
         for item in queryset:
             v = str(item.expdate - dt_now).split()
-            #print(v)
             item.timeleft = int(v[0])
-            #print(item.timeleft)
             item.save()
 
-            timeleft2.append(item.timeleft)
-
-            print(timeleft2)
-
-             # used to send additional context
-            context = super().get_context_data(**kwargs)
-
-            context["title"] = 'New Stock'
-            context["savebtn"] = 'Add to Inventory'
-            context["timeleft2"] = timeleft2
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'New Stock'
+        context["savebtn"] = 'Add to Inventory'
 
         return context
 
-
-    # DEV : to be modified
-    # temp will be expdate. ( I failed to bring expdate data here due to DeferredAttribute error )
-
-    # Current date
-    #dt_now = datetime.datetime.now()  # almost same : dt_today = datetime.date.today()
-
-    # test : failed (DeferredAttribute error, I don't know why). expdate is also the same.
-    #temp1 = Stock.expdate2
-    #timeleft_temp1 = datetime.datetime.strptime(temp1, '%Y-%m-%d') - dt_now
-
-    # Fixed date string (temp) : success
-    #temp = "2022-12-30"
-    #timeleft_temp = datetime.datetime.strptime(temp, '%Y-%m-%d') - dt_now
-    #Stock.timeleft = timeleft_temp.days
-
-    # END
 
 class StockCreateView(SuccessMessageMixin, CreateView):                                 # createview class to add new stock, mixin used to display message
     model = Stock                                                                       # setting 'Stock' model as model

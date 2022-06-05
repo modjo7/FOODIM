@@ -300,19 +300,13 @@ class PurchaseArticleView(View):
         form = PurchaseDetailsForm(request.POST)
         if form.is_valid():
             articledetailsobj = PurchaseArticleDetails.objects.get(articleno=articleno)
-            
-            articledetailsobj.eway = request.POST.get("eway")    
-            articledetailsobj.veh = request.POST.get("veh")
-            articledetailsobj.destination = request.POST.get("destination")
-            articledetailsobj.po = request.POST.get("po")
-            articledetailsobj.cgst = request.POST.get("cgst")
-            articledetailsobj.sgst = request.POST.get("sgst")
-            articledetailsobj.igst = request.POST.get("igst")
-            articledetailsobj.cess = request.POST.get("cess")
-            articledetailsobj.tcs = request.POST.get("tcs")
-            articledetailsobj.total = request.POST.get("total")
 
+            articledetailsobj.title = request.POST.get("title")
+            articledetailsobj.comment = request.POST.get("comment")
+            articledetailsobj.contact = request.POST.get("contact")
+            articledetailsobj.address = request.POST.get("address")
             articledetailsobj.save()
+
             messages.success(request, "Article details have been modified successfully")
         context = {
             'article'          : PurchaseArticle.objects.get(articleno=articleno),
@@ -342,19 +336,10 @@ class SaleArticleView(View):
         form = SaleDetailsForm(request.POST)
         if form.is_valid():
             articledetailsobj = SaleArticleDetails.objects.get(articleno=articleno)
-            
-            articledetailsobj.eway = request.POST.get("eway")    
-            articledetailsobj.veh = request.POST.get("veh")
-            articledetailsobj.destination = request.POST.get("destination")
-            articledetailsobj.po = request.POST.get("po")
-            articledetailsobj.cgst = request.POST.get("cgst")
-            articledetailsobj.sgst = request.POST.get("sgst")
-            articledetailsobj.igst = request.POST.get("igst")
-            articledetailsobj.cess = request.POST.get("cess")
-            articledetailsobj.tcs = request.POST.get("tcs")
-            articledetailsobj.total = request.POST.get("total")
 
+            articledetailsobj.address = request.POST.get("address")
             articledetailsobj.save()
+
             messages.success(request, "Article details have been modified successfully")
         context = {
             'article'          : SaleArticle.objects.get(articleno=articleno),

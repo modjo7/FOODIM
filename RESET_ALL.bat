@@ -9,6 +9,7 @@ rmdir /s /q inventory\__pycache__
 rmdir /s /q inventory\migrations
 rmdir /s /q core\__pycache__
 rmdir /s /q homepage\__pycache__
+rmdir /s /q homepage\migrations
 
 del /s /q __init__.py
 

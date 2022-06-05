@@ -20,7 +20,7 @@ class StockForm(forms.ModelForm):
 
     class Meta:
         model = Stock
-        fields = ['name', 'itemname', 'quantity', 'username', 'expdate', 'desc']
+        fields = ['name', 'itemname', 'quantity', 'username', 'expdate', 'desc', 'photo']
 
         # DEV added (for ordering by timeleft)
         ordering  =  [ '-timeleft' ]

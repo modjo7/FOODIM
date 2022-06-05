@@ -34,7 +34,7 @@
                                     </tr>
                                     <tr>
                                         <td class="inner-box" style="font-weight: bold;">Comment:</td>
-                                        <td class="inner-box align-middle">&nbsp; <input type="comment" name="title" class="align-middle" style="border: 0;" value="{{ articledetails.comment }}"></td>
+                                        <td class="inner-box align-middle">&nbsp; <input type="text" name="comment" class="align-middle" style="border: 0;" value="{{ articledetails.comment }}"></td>
                                     </tr>
 
                                     <tr>
@@ -47,7 +47,11 @@
                                     </tr>
                                     <tr>
                                         <td class="inner-box" style="width: 50%; font-weight: ; text-align: center"><br>{{ article.item.name }}<br><br></td>
-                                        <td class="inner-box" style="width: 50%; font-weight: ;"><br><br><br><br></td>
+                                        <td class="inner-box" style="width: 50%; font-weight: ;">
+                                            {% if article.item.picture %}
+                                                <img src ="{{ article.item.picture.url }}" width=200>
+                                            {% endif %}
+                                        </td>
                                     </tr>
 
                                 </tbody>

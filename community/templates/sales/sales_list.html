@@ -22,11 +22,10 @@
         <thead class="thead-inverse align-middle">
             <tr>
                 <th width="5%">No</th>
-                <th width="10%">Item</th>
-                <th width="10%">Shell life</th>
+                <th width="20%">Item</th>
+                <th width="20%">Stock</th>
                 <th width="5%">Quantity</th>
                 <th width="10%">Price</th>
-                <th width="20%">Picture</th>
                 <th width="20%">Date</th>
                 <th width="20%">View</th>
             </tr>
@@ -55,7 +54,6 @@
                     </th>
 
                     <th width="10%">{{ sale.get_total_price }}</th>
-                    <th width="20%">#Picture</th>
                     <th width="20%">{{ sale.time.date }}</th>
                     <th width="20%">
                         <a href="{% url 'sale-article' sale.articleno %}" class="btn ghost-pink">View</a> <a href="{% url 'delete-sale' sale.pk %}" class="btn ghost-red">Delete</a>

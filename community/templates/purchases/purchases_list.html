@@ -22,11 +22,10 @@
         <thead class="thead-inverse align-middle">
             <tr>
                 <th width="5%">No</th>
-                <th width="10%">Item</th>
-                <th width="10%">Stock</th>
+                <th width="20%">Item</th>
+                <th width="20%">Target Stock</th>
                 <th width="5%">Quantity</th>
                 <th width="10%">Price</th>
-                <th width="20%">Description</th>
                 <th width="20%">Date</th>
                 <th width="20%">View</th>
             </tr>
@@ -47,7 +46,7 @@
                             <a href="{% url 'item' purchase.item.name %}">{{ purchase.item }}</a> <br>
                         {% endif %}
                     </th>
-                    <th width="10%"> <! #DEF It has to be modified. If stock items (inventory) are shared, this field is needed>
+                    <th width="10%">
                         {% for item in purchase.get_items_list %}
                             {{ item.stock.name }} <br>
                         {% endfor %}
@@ -60,7 +59,6 @@
                     </th>
 
                     <th width="10%">{{ purchase.get_total_price }}</th>
-                    <th width="20%">{{ purchase.desc }}</th> <! #DEF to be replaced to picture>
                     <th width="20%">{{ purchase.time.date }}</th>
                     <th width="20%">
                         <a href="{% url 'purchase-article' purchase.articleno %}" class="btn ghost-pink">View</a> <a href="{% url 'delete-purchase' purchase.pk %}" class="btn ghost-red">Delete</a>

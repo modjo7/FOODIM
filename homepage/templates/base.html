@@ -43,13 +43,9 @@
             
             <div class="sidebar-header">
                 <a class="navbar-brand titlefont mr-4" href="{% url 'home' %}"><h3>FOODIM</h3></a>
-
-                <a class="navbar-brand titlefont mr-4"><h6>V0.3</h6></a>
             </div>
 
             <div class="sidebar-header" class="bg-light">
-
-                <a class="navbar-brand titlefont mr-4"><h6>Notice</h6></a>
 
                 {% with statement=1 %}
                    {% for item in timeleft_user %}
@@ -58,6 +54,7 @@
                            {% changeStatement statement as statement %} <!-- when u don't want to enter in if again. -->
 
                            <!-- Line -->
+                           <a class="navbar-brand titlefont mr-4"><h6>Notice</h6></a>
                            <br><div style="color:#3d85c6; font-style: bold; font-size: 2rem; border-bottom: 1px solid white;"></div>
                            <small><span style="color: aquamarine">Expiration date is approaching!: </span></small>
                             <!-- Line End -->
@@ -65,7 +62,7 @@
                             {% for mystock in timeleft %}
                                 <div class="row">
                                     <div class="col-md-9">
-                                        <small> {{mystock}} days left </small><br>
+                                        <small> {{mystock}} </small><br>
                                     </div>
                                 </div>
                             {% endfor %}
@@ -74,42 +71,30 @@
                    {% endfor %}
                 {% endwith %}
 
-
-                <p>
+                <p></p>
 
                 {% for item in purchases %}
-
-                    {% if not forloop.first %}
-                        <br><div style="border-bottom: 0.5px solid #fff"></div><br>
-                    {% endif %}
-                    <div class="row">               
-                        <div class="col-md-9"> 
-                             <small> Article is uploaded <a href="{% url 'purchase-article' item.articleno %}">View</a>
-                            (Buy {{ item.item.name }}! ) </small>
-                            <br>
-                            
+                    {% if forloop.first %}
+                        <div class="row">
+                            <div class="col-md-9">
+                                 <small> Article is uploaded <a href="{% url 'purchase-article' item.articleno %}">View</a>
+                                (Buy {{ item.item.name }}! ) </small>
+                                <br>
+                            </div>
                         </div>
-                         
-                    </div>
+                    {% endif %}
+
                 {% endfor %}
 
                 {% for item in sales %}
-                    {% if not forloop.first %}
-                        <br><div style="border-bottom: 0.5px solid #fff"></div><br>
-                    {% endif %}
-                    <div class="row">
-                        <div class="col-md-9">
-                             <small> Article is uploaded <a href="{% url 'sale-article' item.articleno %}">View</a>
-                            (Sell {{ item.title }} !) </small>
-
-                            <br>
-                            {{ item.stock.name }}
-                            {% if item.stock.timeleft == 0 %}
-                                TEST
-                            {% endif %}
+                    {% if forloop.first %}
+                        <div class="row">
+                            <div class="col-md-9">
+                                 <small> Article is uploaded <a href="{% url 'sale-article' item.articleno %}">View</a>
+                                (Sell {{ item.title }} !) </small>
+                            </div>
                         </div>
-
-                    </div>
+                    {% endif %}
                 {% endfor %}
                 
 
@@ -151,12 +136,14 @@
                 </li>
 
                 <li class="bottomleft">
-                    <a href="#UserSubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button" style="color:#33f3ff">User : {{ request.user.username }}</a>
+                    <a href="#UserSubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button" style="color:#ffffff">User : {{ request.user.username }}</a>
                     <ul class="collapse list-unstyled" id="UserSubmenu">
                         {% if request.user.is_superuser %}
                             <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'admin:index' %}" style="color:#edf3ff">Admin Page</a> </li>
                         {% endif %}
-                            <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'logout' %}" style="color:#edf3ff">Logout</a> </li>
+                            <li><a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'logout' %}" style="color:#33f3ff">Logout</a> </li>
+                            <li><a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'change_password' %}" style="color:#33f3ff">Change Membership</a></li>
+                            <li><a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'withdrawal' %}" style="color:#33f3ff">Membership Withdrawal</a></li>
                     </ul>
                 </li>
 
