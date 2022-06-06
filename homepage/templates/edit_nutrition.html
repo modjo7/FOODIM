@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+
+{% block title %} {{title}} {% endblock title %}
+
+
+{% block content %}
+
+    <div style="color:#3d85c6; font-size: 2rem; border-bottom: 1px solid white;">{{title}}</div> <br>
+
+    <br><br><h5 style="color:#3d85c6" class="left-middle">User data</h5>
+    <br>
+        Please enter your consumed nutrition (g) :
+    <br><br>
+
+    <form method="post" enctype="multipart/form-data">
+    
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        
+        {{ form.protein.errors }}
+        {{ form.fat.errors }}
+        {{ form.carbohydrate.errors }}
+        {{ form.vitamin.errors }}
+        {{ form.username.errors }}
+
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label style="font-size: 22px" for="{{ form.protein.id_for_label }}">Protein</label>
+                {{ form.protein }}
+            </div>
+            <div class="form-group col-md-3">
+                <label style="font-size: 22px" for="{{ form.fat.id_for_label }}">Fat</label>
+                {{ form.fat }}
+            </div>
+           <div class="form-group col-md-3">
+                <label style="font-size: 22px" for="{{ form.carbohydrate.id_for_label }}">Carbohydrate</label>
+                {{ form.carbohydrate }}
+            </div>
+            <div class="form-group col-md-3">
+                <label style="font-size: 22px" for="{{ form.vitamin.id_for_label }}">Vitamin</label>
+                {{ form.vitamin }}
+            </div>
+            <div class="form-group">
+                <input type="text", id="username", name="username", value= {{user.username}} readonly style="opacity: 0">
+            </div>
+        </div>
+
+        <div class="align-middle">
+            <button type="submit" class="btn ghost-pink">{{ savebtn }}</button>
+        </div>
+        
+    </form>
+
+{% endblock content %}
