@@ -20,6 +20,19 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
+
+from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic import (
+    View,
+    ListView,
+    CreateView,
+    UpdateView,
+    DeleteView
+)
+from .models import ConsumedData
+
+from .forms import ConsumedDataForm
+
 class HomeView(View):
     template_name = "home.html"
 
@@ -111,35 +124,58 @@ class NutritionView(View):
     template_name = "nutrition.html"
 
     def get(self, request):
+
         nutrition_recommended = []
         nutrition_consumed = []
-        nutrition_labels = ['Protein', 'Fat', 'Carbohydrate']
+        nutrition_labels = ['Protein', 'Fat', 'Carbohydrate', 'Vitamin']
 
         dt_now = datetime.date.today()
 
         y = (dt_now - request.user.signupday).total_seconds()
         y = y / (60 * 60 * 24)
+        y = y + 1
 
         a = 100 * y
         b = 80 * y
         c = 60 * y
+        d = 20 * y
 
-        d = request.user.protein * a
-        e = request.user.fat * b
-        f = request.user.carbohydrate * c
+        queryset = ConsumedData.objects.filter(username=request.user.username)
+
+        for item in queryset:
+            e = item.protein * a
+            f = item.fat * b
+            g = item.carbohydrate * c
+            h = item.vitamin * c
 
         nutrition_recommended.append(a)
         nutrition_recommended.append(b)
         nutrition_recommended.append(c)
+        nutrition_recommended.append(d)
 
-        nutrition_consumed.append(d)
         nutrition_consumed.append(e)
         nutrition_consumed.append(f)
+        nutrition_consumed.append(g)
+        nutrition_consumed.append(h)
 
-        print(nutrition_consumed)
         context = {
             'nutrition_recommended': nutrition_recommended,
             'nutrition_consumed': nutrition_consumed,
             'nutrition_labels': nutrition_labels,
         }
         return render(request, self.template_name, context)
+
+
+
+class ConsumedDataCreateView(SuccessMessageMixin, CreateView):
+    model = ConsumedData
+    form_class = ConsumedDataForm
+    success_url = '/nutrition'
+    success_message = "Nutrition information been modified successfully"
+    template_name = "edit_nutrition.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'Nutrition User information'
+        context["savebtn"] = 'Continue'
+        return context

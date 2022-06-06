@@ -23,3 +23,14 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+class ConsumedData(models.Model):
+    id = models.AutoField(primary_key=True)
+    username = models.CharField(max_length=150)
+    protein = models.IntegerField(default=0)
+    fat = models.IntegerField(default=0)
+    carbohydrate = models.IntegerField(default=0)
+    vitamin = models.IntegerField(default=0)
+    def __str__(self):
+        return self.username

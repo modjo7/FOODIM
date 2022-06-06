@@ -9,18 +9,26 @@
 {% block content %}
 
     <div style="color:#3d85c6; font-style: bold; font-size: 2rem; border-bottom: 1px solid #fff">Nutrition status for {{ request.user.username }} </div>
+
     <br>
-        Your comsumed nutrition based on the user data : {{ nutrition_consumed }}
+        Your comsumed nutrition based on the user data :
     <br><br>
 
-        <div id="container" style="position: relative; height:45vh; border: 2mm ridge #3D85C6; border-radius: 30px;" class="align-middle table-bordered">
+    <div id="container" style="position: relative; height:45vh; border: 2mm ridge #3D85C6;" class="align-middle table-bordered">
+        <canvas id="pie-chart_consumed"></canvas>
+    </div>
+    <div id="container" style="position: relative; height:45vh; border: 2mm ridge #3D85C6;" class="align-middle table-bordered">
         <canvas id="bar-graph_consumed"></canvas>
     </div>
+
     <br>
-        Your recommended nutrition since the signup day : {{ nutrition_recommended }}
+        Your recommended nutrition since the signup day :
     <br><br>
 
-    <div id="container" style="position: relative; height:45vh; border: 2mm ridge #3D85C6; border-radius: 30px;" class="align-middle table-bordered">
+    <div id="container" style="position: relative; height:45vh; border: 2mm ridge #3D85C6;" class="align-middle table-bordered">
+        <canvas id="pie-chart"></canvas>
+    </div>
+    <div id="container" style="position: relative; height:45vh; border: 2mm ridge #3D85C6;" class="align-middle table-bordered">
         <canvas id="bar-graph"></canvas>
     </div>
 
@@ -34,7 +42,7 @@
             type: 'bar',
             data: {
                 datasets: [{
-                    backgroundColor: '#5ca6e9',
+                    backgroundColor: ['#5ca6e9', 'red', 'orange', 'green'],
                     label: 'Nutrition recommended',
                     data: {{ nutrition_recommended|safe }},
                 }],
@@ -46,14 +54,13 @@
             },
         };
 
-
         //runs all charts on loading the webpage
 
         var barConfig2 = {
             type: 'bar',
             data: {
                 datasets: [{
-                    backgroundColor: 'orange',
+                    backgroundColor: ['#5ca6e9', 'red', 'orange', 'green'],
                     label: 'Nutrition consumed',
                     data: {{ nutrition_consumed|safe }},
                 }],
@@ -65,6 +72,37 @@
             },
         };
 
+        var pieConfig1 = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    backgroundColor: ['#5ca6e9', 'red', 'orange', 'green'],
+                    label: 'Nutrition recommended',
+                    data: {{ nutrition_recommended|safe }},
+                }],
+                labels: {{ nutrition_labels|safe }}
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            },
+        };
+
+        var pieConfig2 = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    backgroundColor: ['#5ca6e9', 'red', 'orange', 'green'],
+                    label: 'Nutrition consumed',
+                    data: {{ nutrition_consumed|safe }},
+                }],
+                labels: {{ nutrition_labels|safe }}
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            },
+        };
 
         //runs all charts on loading the webpage
         window.onload = function() {
@@ -72,6 +110,13 @@
             var ctx2 = document.getElementById('bar-graph_consumed').getContext('2d');
             window.BarStock = new Chart(ctx1, barConfig);
             window.BarStock = new Chart(ctx2, barConfig2);
+
+            var ctx3 = document.getElementById('pie-chart').getContext('2d');
+            var ctx4 = document.getElementById('pie-chart_consumed').getContext('2d');
+
+            window.BarStock = new Chart(ctx3, pieConfig1);
+            window.BarStock = new Chart(ctx4, pieConfig2);
+
         };
 
     </script>
