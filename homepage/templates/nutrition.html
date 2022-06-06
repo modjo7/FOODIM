@@ -10,8 +10,10 @@
 
     <div style="color:#3d85c6; font-style: bold; font-size: 2rem; border-bottom: 1px solid #fff">Nutrition status for {{ request.user.username }} </div>
 
+    <br><br><h5 style="color:#3d85c6" class="left-middle">Comsumed</h5>
     <br>
-        Your comsumed nutrition based on the user data :
+        Total consumed calorie based on your input : {{ calorie_consumed }} kcal. <br>
+        Total consumed nutritions (g) :
     <br><br>
 
     <div id="container" style="position: relative; height:45vh; border: 2mm ridge #3D85C6;" class="align-middle table-bordered">
@@ -21,8 +23,10 @@
         <canvas id="bar-graph_consumed"></canvas>
     </div>
 
+    <br> <br><h5 style="color:#3d85c6" class="left-middle">Recommendation</h5>
     <br>
-        Your recommended nutrition since the signup day :
+        Total calorie which had to be consumed since the signup day : {{ calorie_toconsume }} kcal. <br>
+        Total nutritions which had to be eaten : <br>
     <br><br>
 
     <div id="container" style="position: relative; height:45vh; border: 2mm ridge #3D85C6;" class="align-middle table-bordered">

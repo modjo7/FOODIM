@@ -140,6 +140,9 @@ class NutritionView(View):
         c = 60 * y
         d = 20 * y
 
+        calorie_toconsume = a*4 + b*9 + c*4
+        calorie_consumed = 0
+
         queryset = ConsumedData.objects.filter(username=request.user.username)
 
         for item in queryset:
@@ -147,6 +150,7 @@ class NutritionView(View):
             f = item.fat
             g = item.carbohydrate
             h = item.vitamin
+            calorie_consumed = e*4 + f*9 + g+4
 
         nutrition_recommended.append(a)
         nutrition_recommended.append(b)
@@ -158,10 +162,14 @@ class NutritionView(View):
         nutrition_consumed.append(g)
         nutrition_consumed.append(h)
 
+        calorie_consumed
+
         context = {
             'nutrition_recommended': nutrition_recommended,
             'nutrition_consumed': nutrition_consumed,
             'nutrition_labels': nutrition_labels,
+            'calorie_consumed': calorie_consumed,
+            'calorie_toconsume': calorie_toconsume,
         }
         return render(request, self.template_name, context)
 
