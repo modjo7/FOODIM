@@ -143,10 +143,10 @@ class NutritionView(View):
         queryset = ConsumedData.objects.filter(username=request.user.username)
 
         for item in queryset:
-            e = item.protein * a
-            f = item.fat * b
-            g = item.carbohydrate * c
-            h = item.vitamin * c
+            e = item.protein
+            f = item.fat
+            g = item.carbohydrate
+            h = item.vitamin
 
         nutrition_recommended.append(a)
         nutrition_recommended.append(b)
